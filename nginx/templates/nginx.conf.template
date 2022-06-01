@@ -33,16 +33,16 @@ server {
 	# global gzip on
   	gzip on;
 	gzip_http_version 1.1;
-    gzip_comp_level 6;
-    gzip_min_length 1100;
-    gzip_buffers 4 8k;
-    gzip_types text/plain application/xhtml+xml text/css application/xml application/xml+rss text/javascript application/javascript application/x-javascript
-    gzip_proxied	any;
-    gzip_disable	"MSIE [1-6]\.";
+	gzip_comp_level 6;
+	gzip_min_length 1100;
+	gzip_buffers 4 8k;
+	gzip_types text/plain application/xhtml+xml text/css application/xml application/xml+rss text/javascript application/javascript application/x-javascript
+	gzip_proxied	any;
+	gzip_disable	"MSIE [1-6]\.";
 
     # add global x-content-type-options header
     add_header X-Content-Type-Options nosniff;
-  	add_header Cache-Control public;  
+	add_header Cache-Control public;  
 	
 	location / {
 		try_files $uri $uri/ /index.php?$args;
@@ -71,23 +71,23 @@ server {
 	}
 	#
 	# deny access to .htaccess vb. files, if Apache's document root
-    #
+	#
 	location ~*  \.(svg|svgz)$ {
         types {}
         default_type image/svg+xml;
-    }
-    location = /favicon.ico {
-        log_not_found off;        
-    }
-    location = /robots.txt {
-        allow all;
-        log_not_found off;        
-    }
-    location ~/\. {
-        deny all;     
-        log_not_found off;
-    }    
-    #
-    access_log off;
-    error_log  /var/log/nginx/${NGINX_HOST}.error.log error;
+	}
+	location = /favicon.ico {
+		log_not_found off;        
+	}
+	location = /robots.txt {
+		allow all;
+		log_not_found off;        
+	}
+	location ~/\. {
+		deny all;     
+		log_not_found off;
+	} 
+	#
+	access_log off;
+	error_log  /var/log/nginx/${NGINX_HOST}.error.log error;
 }
