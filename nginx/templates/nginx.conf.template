@@ -87,7 +87,7 @@ server {
         deny all;     
         log_not_found off;
     }    
-	#
-	access_log off;
-	error_log  /var/log/nginx/${NGINX_HOST}.error.log error;
+    #
+    access_log off;
+    error_log  /var/log/nginx/${NGINX_HOST}.error.log error;
 }
