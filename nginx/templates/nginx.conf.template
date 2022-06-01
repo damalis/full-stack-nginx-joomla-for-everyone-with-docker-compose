@@ -40,8 +40,8 @@ server {
 	gzip_proxied	any;
 	gzip_disable	"MSIE [1-6]\.";
 
-    # add global x-content-type-options header
-    add_header X-Content-Type-Options nosniff;
+	# add global x-content-type-options header
+	add_header X-Content-Type-Options nosniff;
 	add_header Cache-Control public;  
 	
 	location / {
