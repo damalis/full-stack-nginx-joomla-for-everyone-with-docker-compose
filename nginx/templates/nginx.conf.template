@@ -41,8 +41,7 @@ server {
 	gzip_disable	"MSIE [1-6]\.";
 
 	# add global x-content-type-options header
-	add_header X-Content-Type-Options nosniff;
-	add_header Cache-Control public;  
+	add_header X-Content-Type-Options nosniff;	
 	
 	location / {
 		try_files $uri $uri/ /index.php?$args;
@@ -70,6 +69,12 @@ server {
 		# fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
 	}
 	#
+	# deny running scripts inside writable directories
+	location ~* /(images|cache|media|logs|tmp)/.*\.(php|pl|py|jsp|asp|sh|cgi)$ {
+		return 403;
+		error_page 403 /403_error.html;
+    }
+	#
 	# deny access to .htaccess vb. files, if Apache's document root
 	#
 	location ~*  \.(svg|svgz)$ {
@@ -87,6 +92,15 @@ server {
 		deny all;     
 		log_not_found off;
 	} 
+	#
+	# caching of files 
+	location ~* \.(ico|pdf|flv)$ {
+		expires 1y;
+	}
+
+	location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|txt)$ {
+		expires 14d;
+	}
 	#
 	access_log off;
 	error_log  /var/log/nginx/${NGINX_HOST}.error.log error;
