@@ -116,7 +116,7 @@ docker-compose up -d
 then reloading for webserver ssl configuration
 
 ```
-docker exec webserver httpd -k restart
+docker exec webserver nginx -s reload
 ```
 
 The containers are now built and running. You should be able to access the Joomla installation with the configured IP in the browser address. `https://example.com`.
