@@ -2,6 +2,8 @@ upstream docker_webserver {
 	server	joomla:9000;
 }
 
+server_tokens off;
+
 server {
 	listen ${NGINX_PORT} default_server;
 	listen [::]:${NGINX_PORT} ipv6only=on default_server;
@@ -31,7 +33,7 @@ server {
 	include /etc/letsencrypt/options-ssl-nginx.conf;
     
 	# global gzip on
-  	gzip on;
+	gzip on;
 	gzip_http_version 1.1;
 	gzip_comp_level 6;
 	gzip_min_length 1100;
@@ -43,8 +45,10 @@ server {
 	# add global x-content-type-options header
 	add_header X-Content-Type-Options nosniff;	
 	
+	root /var/www/html;
+	
 	location / {
-		try_files $uri $uri/ /index.php?$args;
+		try_files $uri /index.php$is_args$args;
 	}
 	
 	location ~ [^/]\.php(/|$) {
@@ -56,7 +60,7 @@ server {
 		# Mitigate https://httpoxy.org/ vulnerabilities
 		fastcgi_param HTTP_PROXY "";
 
-		fastcgi_pass docker_webserver; #127.0.0.1:9000;
+		fastcgi_pass docker_webserver;
 		fastcgi_index index.php;
 
 		# include the fastcgi_param setting
@@ -66,7 +70,7 @@ server {
 		#  the script name. If it is not set in fastcgi_params file,
 		# i.e. /etc/nginx/fastcgi_params or in the parent contexts,
 		# please comment off following line:
-		# fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+		fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
 	}
 	#
 	# deny running scripts inside writable directories
@@ -76,6 +80,10 @@ server {
     }
 	#
 	# deny access to .htaccess vb. files, if Apache's document root
+	location ~/\. {
+		deny all;     
+		log_not_found off;
+	}
 	#
 	location ~*  \.(svg|svgz)$ {
         types {}
@@ -87,10 +95,6 @@ server {
 	location = /robots.txt {
 		allow all;
 		log_not_found off;        
-	}
-	location ~/\. {
-		deny all;     
-		log_not_found off;
 	} 
 	#
 	# caching of files 
