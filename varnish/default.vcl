@@ -88,10 +88,9 @@ sub vcl_recv {
         req.http.Authorization ||
         req.http.Authenticate ||
         req.http.X-Logged-In == "True" ||
-        req.http.Cookie ~ "userID" ||
-		req.http.Cookie ~ "joomla_[a-zA-Z0-9_]+" ||
+        #req.http.Cookie ~ "userID" ||
+        #req.http.Cookie ~ "joomla_[a-zA-Z0-9_]+" ||
         req.url ~ "add_to_cart" ||
-        req.url ~ "edd_action" ||
         req.url ~ "nocache" ||
         req.url ~ "^/addons" ||
         req.url ~ "^/bb-admin" ||
