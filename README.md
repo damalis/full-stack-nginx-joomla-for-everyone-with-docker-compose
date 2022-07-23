@@ -208,6 +208,10 @@ docker container restart <joomla_container_id>
 add and/or remove joomla site folders and files with any ftp client program in ```./joomla``` folder.
 <br />You can also visit `https://example.com` to access website after starting the containers.
 
+#### For Joomla Installation
+
+Database server name = database
+
 #### Redis
 
 set and enable cache option at global configuration [Redis Cache](https://example.com/administrator/).
