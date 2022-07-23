@@ -88,8 +88,8 @@ sub vcl_recv {
         req.http.Authorization ||
         req.http.Authenticate ||
         req.http.X-Logged-In == "True" ||
-        #req.http.Cookie ~ "userID" ||
-        #req.http.Cookie ~ "joomla_[a-zA-Z0-9_]+" ||
+        req.http.Cookie ~ "userID" ||
+        req.http.Cookie ~ "joomla_[a-zA-Z0-9_]+" ||
         req.url ~ "add_to_cart" ||
         req.url ~ "nocache" ||
         req.url ~ "^/addons" ||
@@ -204,6 +204,16 @@ sub vcl_backend_response {
         set beresp.http.X-Cacheable = "NO:Got Cookies";
     } elseif(beresp.http.Cache-Control ~ "private") {
         set beresp.http.X-Cacheable = "NO:Cache-Control=private";
+    }
+
+    # Don't cache 50x responses
+    if (
+        beresp.status == 500 ||
+        beresp.status == 502 ||
+        beresp.status == 503 ||
+        beresp.status == 504
+    ) {
+        return (abandon);
     }	
 }
 
