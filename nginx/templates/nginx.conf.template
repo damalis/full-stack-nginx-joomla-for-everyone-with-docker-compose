@@ -77,33 +77,6 @@ server {
 		# Mitigate httpoxy attack
 		proxy_set_header Proxy "";        
 	}	
-	
-	#
-	# deny running scripts inside writable directories
-	location ~* /(images|cache|media|logs|tmp)/.*\.(php|pl|py|jsp|asp|sh|cgi)$ {
-		return 403;
-		error_page 403 /403_error.html;
-    }
-	#
-	# deny access to .htaccess vb. files, if Apache's document root
-	location ~/\. {
-		deny all;     
-		log_not_found off;
-	}
-	#
-	location ~*  \.(svg|svgz)$ {
-        types {}
-        default_type image/svg+xml;
-	}
-	location = /favicon.ico {
-		log_not_found off;
-		access_log off;        
-	}
-	location = /robots.txt {
-		allow all;
-		log_not_found off;
-		access_log off;        
-	} 
 	#
 	access_log off;
 	error_log  /var/log/nginx/${NGINX_HOST}.error.log error;
@@ -144,6 +117,32 @@ server {
 		# please comment off following line:
 		fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
 	}
+	#
+	# deny running scripts inside writable directories
+	location ~* /(images|cache|media|logs|tmp)/.*\.(php|pl|py|jsp|asp|sh|cgi)$ {
+		return 403;
+		error_page 403 /403_error.html;
+    }
+	#
+	# deny access to .htaccess vb. files, if Apache's document root
+	location ~/\. {
+		deny all;     
+		log_not_found off;
+	}
+	#
+	location ~*  \.(svg|svgz)$ {
+        types {}
+        default_type image/svg+xml;
+	}
+	location = /favicon.ico {
+		log_not_found off;
+		access_log off;        
+	}
+	location = /robots.txt {
+		allow all;
+		log_not_found off;
+		access_log off;        
+	} 
 	#
 	access_log off;
 	error_log  /var/log/nginx/${NGINX_HOST}.error.log error;
