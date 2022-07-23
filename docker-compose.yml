@@ -26,10 +26,8 @@ services:
             - redis
             - varnish
         environment:
-            JOOMLA_DB_HOST: 'database'
             JOOMLA_DB_USER: '${JOOMLA_DB_USER}'
             JOOMLA_DB_PASSWORD: '${JOOMLA_DB_PASSWORD}'
-            JOOMLA_DB_NAME: '${JOOMLA_DB_NAME}'
             TZ: '${LOCAL_TIMEZONE}'
         labels:            
             - 'docker-volume-backup.stop-during-backup=true'
