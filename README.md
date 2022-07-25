@@ -16,6 +16,7 @@ With this project you can quickly run the following:
 - [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/)
 - [database](https://hub.docker.com/_/mariadb)
 - [redis](https://hub.docker.com/_/redis)
+- [varnish](https://hub.docker.com/_/varnish)
 - [backup](https://hub.docker.com/r/futurice/docker-volume-backup)
 
 For certbot (letsencrypt) certificate:
