@@ -76,10 +76,36 @@ server {
 		#
 		# Mitigate httpoxy attack
 		proxy_set_header Proxy "";        
+	}
+	#
+	# deny access to .htaccess vb. files, if Apache's document root
+	location ~/\. {
+		deny all;     
+		log_not_found off;
+	}
+	#
+	location ~ /.well-known {
+		allow all;
+	}
+	#	
+	location ~*  \.(svg|svgz)$ {
+		types {}
+		default_type image/svg+xml;
 	}	
 	#
+	location = /favicon.ico {
+		log_not_found off;
+		access_log off;        
+	}
+	#
+	location = /robots.txt {
+		allow all;
+		log_not_found off;
+		access_log off;        
+	}
+	#
 	access_log off;
-	error_log  /var/log/nginx/${NGINX_HOST}.error.log error;
+	error_log  /var/log/nginx/${NGINX_HOST}.error-443.log error;
 }
 
 server {
@@ -90,6 +116,7 @@ server {
 	#
 	
 	root /var/www/html;
+	index index.php;
 	
 	location / {
 		try_files $uri /index.php$is_args$args;
@@ -124,26 +151,6 @@ server {
 		error_page 403 /403_error.html;
 	}
 	#
-	# deny access to .htaccess vb. files, if Apache's document root
-	location ~/\. {
-		deny all;     
-		log_not_found off;
-	}
-	#
-	location ~*  \.(svg|svgz)$ {
-        types {}
-        default_type image/svg+xml;
-	}
-	location = /favicon.ico {
-		log_not_found off;
-		access_log off;        
-	}
-	location = /robots.txt {
-		allow all;
-		log_not_found off;
-		access_log off;        
-	} 
-	#
 	access_log off;
-	error_log  /var/log/nginx/${NGINX_HOST}.error.log error;
+	error_log  /var/log/nginx/${NGINX_HOST}.error-81.log error;
 }
