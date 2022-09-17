@@ -1,4 +1,4 @@
-upstream docker_webserver {
+upstream docker_joomla {
 	server	joomla:9000;
 }
 
@@ -95,17 +95,17 @@ server {
 	#
 	location = /favicon.ico {
 		log_not_found off;
-		access_log off;        
+		access_log off;
 	}
 	#
 	location = /robots.txt {
 		allow all;
 		log_not_found off;
-		access_log off;        
+		access_log off;
 	}
 	#
 	access_log off;
-	error_log  /var/log/nginx/${NGINX_HOST}.error-443.log error;
+	error_log  /var/log/nginx/${NGINX_HOST}-443.error.log error;
 }
 
 server {
@@ -132,7 +132,7 @@ server {
 		fastcgi_param HTTP_PROXY "";
 		fastcgi_param HTTPS $scheme;
 
-		fastcgi_pass docker_webserver;
+		fastcgi_pass docker_joomla;
 		fastcgi_index index.php;
 
 		# include the fastcgi_param setting
@@ -152,5 +152,5 @@ server {
 	}
 	#
 	access_log off;
-	error_log  /var/log/nginx/${NGINX_HOST}.error-81.log error;
+	error_log  /var/log/nginx/${NGINX_HOST}-81.error.log error;
 }
