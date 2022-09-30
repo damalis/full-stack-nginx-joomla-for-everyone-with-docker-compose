@@ -210,13 +210,15 @@ docker container restart joomla
 add and/or remove joomla site folders and files with any ftp client program in ```./joomla``` folder.
 <br />You can also visit `https://example.com` to access website after starting the containers.
 
-#### Database configuration
+#### Joomla
 
 Database server name = database
 
-#### How to remove index.php from URLs or How to Solve Joomla Installation stuck on white blank page.
+Database name = ${JOOMLA_DB_NAME} constant at ./.env file.
 
-You must restart varnish container after enable Use URL Rewriting at Joomla admin page.
+##### How to remove index.php from URLs or How to Solve Joomla Installation stuck on white blank page.
+
+You must restart varnish container after enable Use URL Rewriting at joomla admin page.
 
 #### Redis
 
