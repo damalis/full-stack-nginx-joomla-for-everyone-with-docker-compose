@@ -40,7 +40,8 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 - [Usage](#usage)
 	- [Website](#website)
 	- [Webserver](#webserver)
-	- [Redis Plugin](#redis-plugin)
+	- [Database](#database)
+	- [Redis](#redis)
 	- [phpMyAdmin](#phpmyadmin)
 	- [backup](#backup)					  
 
