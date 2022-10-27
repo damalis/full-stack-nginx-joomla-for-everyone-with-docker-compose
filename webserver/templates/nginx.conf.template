@@ -109,6 +109,10 @@ server {
 		try_files $uri /index.php$is_args$args;
 	}
 	
+	location /administrator/ {
+		try_files $uri /administrator/index.php$is_args$args;
+	}
+	
 	location ~ \.php$ {
 		fastcgi_pass	docker_joomla;
 		fastcgi_index	index.php;
