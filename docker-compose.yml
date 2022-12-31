@@ -64,7 +64,7 @@ services:
         ports:
             - '80:80'
             - '443:443'
-            - '81:81'
+            - '90:90'
         links:
             - joomla
         environment:
@@ -87,7 +87,7 @@ services:
         restart: unless-stopped        
         environment:
             TZ: '${LOCAL_TIMEZONE}'
-        entrypoint: /bin/sh -c "certbot certonly --webroot --webroot-path /tmp/acme-challenge --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}; 
+        entrypoint: /bin/sh -c "certbot certonly --webroot --webroot-path /tmp/acme-challenge --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME} -d mail.${DOMAIN_NAME}; 
             trap exit TERM; while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;"
     
     phpmyadmin:
@@ -206,6 +206,21 @@ services:
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
         command: "-a http=:8080,HTTP -p default_ttl=3600"
+    
+    mail:
+        image: 'mailhog/mailhog'
+        container_name: mail
+        networks:
+            - backend
+        hostname: mail
+        restart: unless-stopped
+        ports:
+            - '1025:1025'
+            - '8025:8025'
+        environment:
+            MH_HOSTNAME: 'mail.${DOMAIN_NAME}'
+            MH_AUTH_FILE: '${DOMAIN_NAME}-auth'
+        entrypoint: sh -c "echo ${PMA_HTPASSWD_USERNAME}:$(MailHog bcrypt ${PMA_HTPASSWD_PASSWORD}) > ${DOMAIN_NAME}-auth && MailHog"
     
     backup:
         image: 'futurice/docker-volume-backup'
