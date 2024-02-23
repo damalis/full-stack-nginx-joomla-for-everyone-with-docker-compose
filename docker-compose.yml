@@ -206,7 +206,7 @@ services:
 
     varnish:
         depends_on:
-            wordpress:
+            joomla:
                 condition: service_healthy
         image: varnish:${VARNISH_VERSION}
         container_name: varnish
