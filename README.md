@@ -353,7 +353,7 @@ add or remove code in the ```./webserver/templates/nginx.conf.template``` file f
 
 #### Database
 
-Database server name = database
+|```Database server name = database```|
 
 #### How to remove index.php from URLs or How to Solve Joomla Installation stuck on white blank page.
 
