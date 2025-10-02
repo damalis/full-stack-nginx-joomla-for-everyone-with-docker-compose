@@ -18,7 +18,7 @@ services:
               target: '${PHP_INI_DIR_PREFIX}/php-fpm.d/z-www.conf'
             - type: bind
               source: ./packagecheck.sh
-              target: '/tmp/packagecheck.
+              target: '/tmp/packagecheck.sh'
         hostname: joomla
         restart: unless-stopped
         ports:
